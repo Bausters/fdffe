@@ -455,4 +455,64 @@ function Cart() {
               </button>
               <span>{cart[i].quantity}</span>
               <button
-                onClick={() => updateQuantity(i
+                onClick={() => updateQuantity(i, cart[i].quantity + 1)}
+                className="px-2 py-1 bg-gray-300 rounded hover:bg-gray-400"
+              >
+                +
+              </button>
+            </div>
+            <button
+              onClick={() => removeItem(i)}
+              className="ml-4 text-red-600 font-bold hover:underline"
+            >
+              Remove
+            </button>
+          </div>
+        ))}
+      </div>
+
+      <div className="mt-8 flex justify-between items-center">
+        <p className="text-2xl font-bold">Total: ${total.toFixed(2)}</p>
+        <button
+          onClick={clearCart}
+          className="bg-red-600 text-white px-6 py-3 rounded hover:bg-red-700 transition"
+        >
+          Clear Cart
+        </button>
+      </div>
+    </div>
+  );
+}
+
+// NotFound page
+function NotFound() {
+  return (
+    <div className="max-w-4xl mx-auto px-4 mt-12 text-center">
+      <h2 className="text-3xl font-bold mb-4">Page Not Found</h2>
+      <a href="/" className="text-blue-600 hover:underline">
+        Go Home
+      </a>
+    </div>
+  );
+}
+
+// App with routes
+function App() {
+  return (
+    <CartProvider>
+      <Router>
+        <NavBar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/category/:categoryName" element={<ProductListing />} />
+          <Route path="/product/:id" element={<ProductDetails />} />
+          <Route path="/cart" element={<Cart />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </CartProvider>
+  );
+}
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
